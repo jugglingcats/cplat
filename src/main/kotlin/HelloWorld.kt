@@ -1,5 +1,6 @@
 package com.akirkpatrick.cplat
 
+import com.mongodb.Mongo
 import com.sun.jersey.api.core.DefaultResourceConfig
 import com.sun.jersey.api.core.ResourceConfig
 import com.sun.jersey.spi.container.WebApplication
@@ -10,9 +11,14 @@ import io.undertow.Undertow
 import io.undertow.servlet.Servlets
 import io.undertow.servlet.api.InstanceFactory
 import io.undertow.servlet.api.InstanceHandle
+import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.ConfigurableApplicationContext
 import org.springframework.context.annotation.AnnotationConfigApplicationContext
+import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.data.mongodb.core.MongoTemplate
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories
 import org.springframework.stereotype.Component
 import java.util.HashMap
 import java.util.concurrent.atomic.AtomicLong
@@ -35,34 +41,61 @@ public class GreetingController {
     }
 }
 
+Component
+public open class Test() {
+    private var repository : CustomerRepository? = null
+
+    Autowired constructor(repository: CustomerRepository) : this() {
+        this.repository=repository
+    }
+
+    public fun test(): Customer {
+        return repository!!.findByFirstName("Alfie");
+    }
+}
+
 Configuration
-open public class Application {
+EnableMongoRepositories
+open public class ApplicationConfig() {
+    Bean(name = array("mongoTemplate"))
+    public open fun buildMongoTemplate(): MongoTemplate {
+        var mongo = Mongo()
+        return MongoTemplate(mongo, "mongo_test")
+    }
+
+}
+
+Component
+public open class Runner {
     fun run(ctx: ConfigurableApplicationContext) {
         val map = HashMap<String, String>()
         map.put("path.work", "es-temp")
-        ElasticSearchServer(map).start()
+//        ElasticSearchServer(map).start()
 
         val instanceFactory = JerseyServletInstanceFactory(ctx)
 
-        val info = Servlets.servlet("JerseyServlet", javaClass<JerseyServlet>(), instanceFactory)
+        val jerseyServletInfo = Servlets.servlet("JerseyServlet", javaClass<JerseyServlet>(), instanceFactory)
                 .addInitParam("com.sun.jersey.api.json.POJOMappingFeature", "true")
-                .addMapping("/*")
+                .addMapping("/api/*")
 
-        val deploymentInfo = Servlets.deployment()
-                .setClassLoader(this.javaClass.getClassLoader())
+        val classLoader = this.javaClass.getClassLoader()
+        val resourceManager = DevModeResourceManager(classLoader)
+        val deploymment = Servlets.deployment()
+                .setClassLoader(classLoader)
                 .setContextPath("/")
                 .setDeploymentName("cplat")
-                .addServlet(info)
+                .addServlet(jerseyServletInfo)
+                .setResourceManager(resourceManager)
 
-        val deploymentManager = Servlets.defaultContainer().addDeployment(deploymentInfo)
+        val deploymentManager = Servlets.defaultContainer().addDeployment(deploymment)
         deploymentManager.deploy()
 
-        var handler = Handlers.path()
+        var mainHandler = Handlers.path()
                 .addPrefixPath("/", deploymentManager.start())
 
         val server = Undertow.builder()
                 .addHttpListener(8080, "0.0.0.0")
-                .setHandler(handler)
+                .setHandler(mainHandler)
                 .build()
 
         server.start()
@@ -94,13 +127,22 @@ class JerseyServlet(val ctx: ConfigurableApplicationContext) : ServletContainer(
 }
 
 public fun main(args: Array<String>) {
-    System.out.println("Here...")
+    val log = LoggerFactory.getLogger(javaClass<ApplicationConfig>())
 
     val ctx: AnnotationConfigApplicationContext = AnnotationConfigApplicationContext()
     ctx.scan("com.akirkpatrick.cplat")
     ctx.refresh()
 
-    System.out.println(ctx.getBean(GreetingController().javaClass))
+    val repository=ctx.getBean(javaClass<CustomerRepository>())
 
-    ctx.getBean(javaClass<Application>()).run(ctx)
+    val obj = Customer("x", "Alfie", "Kirkpatrick")
+    obj.set("age", 46)
+
+    repository.save(obj)
+
+    val customer = repository.findByFirstName("Alfie")
+    log.info("Customer: {}", customer)
+    log.info("Properties: {}", customer.all)
+
+//    ctx.getBean(javaClass<Runner>()).run(ctx)
 }

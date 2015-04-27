@@ -1,0 +1,56 @@
+{
+  "name": "Mini Application 1",
+  "states": [
+    {
+      "id": "app1",
+      "state": {
+        "abstract": true,
+        "templateUrl": "app1/layout.html",
+        "url": "/app1"
+      }
+    },
+    {
+      "id": "app1.dashboard",
+      "state": {
+        "url": "/dashboard",
+        "controller": "App1Ctrl",
+        "templateUrl": "app1/dashboard.html"
+      }
+    },
+    {
+      "id": "app1.section",
+      "state": {
+        "abstract": true,
+        "url": "/section",
+        "templateUrl": "app1/section.html"
+      }
+    },
+    {
+      "id": "app1.section.other",
+      "state": {
+        "url": "/other",
+        "templateUrl": "app1/other.html"
+      }
+    }
+  ],
+  "menu": [
+    {
+      "state": "app1.dashboard",
+      "title": "App1 Dashboard"
+    },
+    {
+      "state": "app1.section.other",
+      "title": "App1 Other"
+    }
+  ],
+  "files": [
+    "app1/style.css",
+    "app1/app1.js"
+  ],
+  "requires": {
+    "ng-moment": [
+      "js/moment.js",
+      "misc/ng-moment.js"
+    ]
+  }
+}

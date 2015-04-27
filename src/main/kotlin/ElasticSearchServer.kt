@@ -3,23 +3,16 @@ package com.akirkpatrick.cplat
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthStatus
 import org.elasticsearch.client.Client
 import org.elasticsearch.common.settings.ImmutableSettings
-import org.elasticsearch.node.Node
-import org.slf4j.Logger
+import org.elasticsearch.node.NodeBuilder
 import org.slf4j.LoggerFactory
-
-import java.io.File
-import java.io.IOException
-import java.io.RandomAccessFile
 import java.util.ArrayList
 import java.util.Collections
-
-import org.elasticsearch.node.NodeBuilder.nodeBuilder
 
 public class ElasticSearchServer (val configuration: Map<String, String>) {
 
     private val builder : ImmutableSettings.Builder get() = ImmutableSettings.settingsBuilder().put(configuration)
 
-    private var server = nodeBuilder().settings(builder).build()
+    private var server = NodeBuilder.nodeBuilder().settings(builder).build()
 
     public fun start() {
         if (log.isInfoEnabled()) {
@@ -32,7 +25,7 @@ public class ElasticSearchServer (val configuration: Map<String, String>) {
             }
         }
 
-        $server!!.start()
+        $server.start()
 
         checkServerStatus()
 
@@ -42,11 +35,11 @@ public class ElasticSearchServer (val configuration: Map<String, String>) {
     }
 
     public fun stop() {
-        $server!!.close()
+        $server.close()
     }
 
     public fun getClient(): Client {
-        return $server!!.client()
+        return $server.client()
     }
 
     protected fun getHealthStatus(): ClusterHealthStatus {
@@ -85,4 +78,3 @@ public class ElasticSearchServer (val configuration: Map<String, String>) {
         }
     }
 }
-

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+    <script src="js/angular.js"></script>
+    <script src="core/dynamic-menu.js"></script>
+    <script src="core/dynamic-module.js"></script>
+    <script src="js/ocLazyLoad.js"></script>
+    <script src="js/angular-ui-router.js"></script>
+    <script>
+        // TODO: should be in script file ;-)
+        var app = angular.module("cplat", ['oc.lazyLoad', 'dynamic.module']);
+
+        app.config(['$ocLazyLoadProvider', '$dynamicModuleProvider', '$stateProvider', function ($ocLazyLoadProvider, $dynamicModuleProvider, $stateProvider) {
+            $ocLazyLoadProvider.config({
+                debug: true,
+                events: true
+            });
+
+            console.log("Initialising container application");
+
+            $stateProvider.state("app", {
+                url: "",
+                templateUrl: "core/index.html",
+                controller: "TestCtrl",
+                resolve: {
+                    test: function ($ocLazyLoad) {
+                        console.log("Resolve for test");
+                        return $ocLazyLoad.load({
+                            name: "test",
+                            files: ["core/module.js"]
+                        })
+                    }
+                }
+            });
+            $stateProvider.state("404", {
+                url: "/404",
+                templateUrl: "core/404.html"
+            });
+
+            $dynamicModuleProvider.configure(["app1", "app2"], "/404");
+        }]);
+    </script>
+</head>
+<body ng-app="cplat">
+<nav class="navbar navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <a href="#" class="navbar-brand">AppName</a>
+        </div>
+        <div class="navbar-collapse">
+            <dynamic-menu></dynamic-menu>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <div ui-view></div>
+</div>
+</body>
+</html>

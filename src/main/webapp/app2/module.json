@@ -1,0 +1,44 @@
+{
+  "name": "Mini Application 2",
+  "states": [
+    {
+      "id": "app2",
+      "state": {
+        "abstract": true,
+        "template": "<div ui-view></div>",
+        "url": "/app2"
+      }
+    },
+    {
+      "id": "app2.dashboard",
+      "state": {
+        "url": "/dashboard",
+        "templateUrl": "app2/dashboard.html"
+      }
+    },
+    {
+      "id": "app2.other",
+      "state": {
+        "url": "/other",
+        "templateUrl": "app2/other.html"
+      }
+    }
+  ],
+  "menu": [
+    {
+      "state": "app2.dashboard",
+      "title": "App2 Dashboard"
+    },
+    {
+      "state": "app2.other",
+      "title": "App2 Other"
+    }
+  ],
+  "files": ["app2/app2.js"],
+  "requires": {
+    "ng-moment": [
+      "js/moment.js",
+      "misc/ng-moment.js"
+    ]
+  }
+}
