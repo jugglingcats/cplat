@@ -26,7 +26,7 @@ public data class Customer(Id val id:String, val firstName:String, val lastName:
     }
 }
 
-public trait CustomerRepository : MongoRepository<Customer, java.lang.String> {
+public interface CustomerRepository : MongoRepository<Customer, java.lang.String> {
     fun findByFirstName(firstName: String) : Customer
 }
 

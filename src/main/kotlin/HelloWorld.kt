@@ -57,7 +57,7 @@ public open class Test() {
 Configuration
 EnableMongoRepositories
 open public class ApplicationConfig() {
-    Bean(name = array("mongoTemplate"))
+    Bean(name = arrayOf("mongoTemplate"))
     public open fun buildMongoTemplate(): MongoTemplate {
         var mongo = Mongo()
         return MongoTemplate(mongo, "mongo_test")
@@ -144,5 +144,6 @@ public fun main(args: Array<String>) {
     log.info("Customer: {}", customer)
     log.info("Properties: {}", customer.all)
 
-//    ctx.getBean(javaClass<Runner>()).run(ctx)
+    log.info("Starting Undertow server...");
+    ctx.getBean(javaClass<Runner>()).run(ctx)
 }

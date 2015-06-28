@@ -35,10 +35,6 @@
   ],
   "menu": [
     {
-      "state": "app1.dashboard",
-      "title": "App1 Dashboard"
-    },
-    {
       "state": "app1.section.other",
       "title": "App1 Other"
     }
@@ -52,5 +48,9 @@
       "js/moment.js",
       "misc/ng-moment.js"
     ]
+  },
+  "keep": {
+    "state": "app1.dashboard",
+    "title": "App1 Dashboard"
   }
 }

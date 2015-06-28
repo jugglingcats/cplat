@@ -1,0 +1,40 @@
+{
+  "name": "Mini Application 1",
+  "states": [
+    {
+      "id": "item",
+      "state": {
+        "abstract": true,
+        "templateUrl": "item/layout.html",
+        "url": "/item"
+      }
+    },
+    {
+      "id": "item.dashboard",
+      "state": {
+        "url": "/dashboard",
+        "controller": "ItemDashboardCtrl",
+        "templateUrl": "item/dashboard.html"
+      }
+    },
+    {
+      "id": "item.create",
+      "state": {
+        "url": "/create",
+        "controller": "ItemCreateCtrl",
+        "templateUrl": "item/create.html"
+      }
+    }
+  ],
+  "menu": [
+    {
+      "state": "item.dashboard",
+      "title": "Items"
+    }
+  ],
+  "files": [
+    "item/item.js"
+  ],
+  "requires": {
+  }
+}
