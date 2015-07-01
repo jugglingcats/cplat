@@ -73,7 +73,9 @@ public class ElasticSearchServer (val configuration: Map<String, String>) {
         private val log = LoggerFactory.getLogger(javaClass<ElasticSearchServer>())
 
         protected fun getValue(map: Map<String, String>, key: String): String? {
-            if (key.startsWith("cloud.aws.secret")) return "<HIDDEN>"
+            if (key.startsWith("cloud.aws.secret")) {
+                return "<HIDDEN>"
+            }
             return map.get(key)
         }
     }
