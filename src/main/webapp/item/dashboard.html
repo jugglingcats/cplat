@@ -1,6 +1,8 @@
-<h1>List of items</h1>
-<ul>
-    <li ng-repeat="item in items">{{item.title}}</li>
-</ul>
-<hr/>
-<a class="btn btn-default" ui-sref="item.create">Create</a>
+<div class="container">
+    <h1>List of items</h1>
+    <ul>
+        <li ng-repeat="item in items"><a ui-sref="item.detail({itemId: item.id})">{{item.title}}</a></li>
+    </ul>
+    <hr/>
+    <a class="btn btn-default" ui-sref="item.create">Create</a>
+</div>

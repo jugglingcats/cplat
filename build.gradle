@@ -53,7 +53,7 @@ dependencies {
 //    compile("org.springframework.boot:spring-boot-starter-undertow:1.2.3.RELEASE")
     testCompile("junit:junit:4.11")
     compile 'org.springframework:spring-context:4.1.6.RELEASE'
-    compile 'com.sun.jersey.contribs:jersey-spring:1.9'
+    compile 'com.sun.jersey.contribs:jersey-spring:1.14'
     compile 'io.undertow:undertow-servlet:1.2.0.Final'
     compile 'com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.2.1'
     compile 'org.elasticsearch:elasticsearch:1.5.1'

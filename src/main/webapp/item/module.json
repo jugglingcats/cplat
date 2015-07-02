@@ -18,6 +18,14 @@
       }
     },
     {
+      "id": "item.detail",
+      "state": {
+        "url": "/detail/:itemId",
+        "controller": "ItemDetailCtrl",
+        "templateUrl": "item/detail.html"
+      }
+    },
+    {
       "id": "item.create",
       "state": {
         "url": "/create",
