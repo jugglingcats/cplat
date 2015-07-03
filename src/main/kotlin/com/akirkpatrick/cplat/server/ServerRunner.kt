@@ -1,19 +1,19 @@
 package com.akirkpatrick.cplat.server
 
 import com.akirkpatrick.cplat.DevModeResourceManager
+import com.akirkpatrick.cplat.es.ElasticSearchServer
 import io.undertow.Handlers
 import io.undertow.Undertow
 import io.undertow.servlet.Servlets
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.ConfigurableApplicationContext
 import org.springframework.stereotype.Component
-import java.util.*
+import java.util.HashMap
 
 Component
-public open class ServerRunner {
-    fun run(ctx: ConfigurableApplicationContext) {
-        val map = HashMap<String, String>()
-        map.put("path.work", "es-temp")
-//        ElasticSearchServer(map).start()
+public open class ServerRunner Autowired constructor(val ctx: ConfigurableApplicationContext, val es: ElasticSearchServer) {
+    fun run() {
+        es.start()
 
         val instanceFactory = JerseyServletInstanceFactory(ctx)
 

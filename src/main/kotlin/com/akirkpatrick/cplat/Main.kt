@@ -27,5 +27,5 @@ public fun main(args: Array<String>) {
     log.info("Properties: {}", item.all())
 
     log.info("Starting Undertow server...");
-    ctx.getBean(javaClass<ServerRunner>()).run(ctx)
+    ctx.getBean(javaClass<ServerRunner>()).run()
 }

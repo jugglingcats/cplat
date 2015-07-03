@@ -1,4 +1,4 @@
-package com.akirkpatrick.cplat
+package com.akirkpatrick.cplat.es
 
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthStatus
 import org.elasticsearch.client.Client

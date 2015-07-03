@@ -3,7 +3,7 @@
 
     app.factory("ItemService", function($http, $q) {
         var def=$q.defer();
-        $http.get("/api/item").success(function(d) {
+        $http.get("/api/item/list").success(function(d) {
             def.resolve(d);
         }).error(function(e) {
             def.cancel(e);
