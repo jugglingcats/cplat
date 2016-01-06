@@ -3,15 +3,25 @@
     "bower_components/react/react.js",
     "bower_components/angular/angular.js",
     "bower_components/angular-resource/angular-resource.js",
+    "bower_components/angular-animate/angular-animate.js",
+    "bower_components/angular-material/angular-material.js",
+    "bower_components/angular-aria/angular-aria.js",
     "bower_components/angular-sanitize/angular-sanitize.js",
+    "bower_components/angular-cookies/angular-cookies.js",
+    "bower_components/angular-spinner/angular-spinner.js",
     "bower_components/angular-ui-router/release/angular-ui-router.js",
 
     "bower_components/bootstrap/dist/js/bootstrap.js",
     "bower_components/moment/moment.js",
+    "bower_components/spin.js/spin.js",
 
-    "bower_components/oclazyload/dist/ocLazyLoad.js"
+    "bower_components/oclazyload/dist/ocLazyLoad.js",
+
+    "bower_components/angular-persona/angular-persona.js"
   ],
   "css": [
+    "bower_components/font-awesome/css/font-awesome.min.css",
+    "bower_components/angular-material/angular-material.css",
     "bower_components/bootstrap/dist/css/bootstrap.min.css"
   ],
   "fonts": [
@@ -19,15 +29,14 @@
     "bower_components/bootstrap/fonts/glyphicons-halflings-regular.svg",
     "bower_components/bootstrap/fonts/glyphicons-halflings-regular.ttf",
     "bower_components/bootstrap/fonts/glyphicons-halflings-regular.woff",
-    "bower_components/bootstrap/fonts/glyphicons-halflings-regular.woff2"
-  ],
-  "keep": [
-    "bower_components/font-awesome/css/font-awesome.min.css",
-    "bower_components/angular-bootstrap/ui-bootstrap-tpls.js",
+    "bower_components/bootstrap/fonts/glyphicons-halflings-regular.woff2",
     "bower_components/font-awesome/fonts/fontawesome-webfont.woff2",
     "bower_components/font-awesome/fonts/fontawesome-webfont.woff",
     "bower_components/font-awesome/fonts/fontawesome-webfont.ttf",
     "bower_components/font-awesome/fonts/fontawesome-webfont.svg",
     "bower_components/font-awesome/fonts/fontawesome-webfont.eot"
+  ],
+  "keep": [
+    "bower_components/angular-bootstrap/ui-bootstrap-tpls.js"
   ]
 }

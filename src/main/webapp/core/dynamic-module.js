@@ -25,29 +25,30 @@
                 console.log("Loading module dependencies: ", config.requires);
                 for (var name in config.requires) {
                     // don't re-load existing modules
-                    if (config.requires.hasOwnProperty(name) ) {
-                        if ( !loader.isLoaded(name) ) {
+                    if (config.requires.hasOwnProperty(name)) {
+                        if (!loader.isLoaded(name)) {
                             console.log("Loading dependency: ", name);
                             var info = {name: name, files: config.requires[name]};
                             // chain the promise
                             promise = promise.then(function () {
-                                loader.load(info);
+                                return loader.load(info);
                             });
                         }
                     }
                 }
             }
-            // load the module's files (expected to include an angular module matching the module id)
-            if (config.files) {
-                console.log("Loading module files: ", config.files, "for module:", moduleId);
-                promise = promise.then(function () {
-                    return loader.load({
-                        name: moduleId,
-                        files: config.files
+            return promise.then(function () {
+                // load the module's files (expected to include an angular module matching the module id)
+                if (config.files) {
+                    console.log("Loading module files: ", config.files, "for module:", moduleId);
+                    return promise.then(function () {
+                        return loader.load({
+                            name: moduleId,
+                            files: config.files
+                        });
                     });
-                });
-            }
-            return promise;
+                }
+            });
         }
 
         /**
@@ -65,11 +66,11 @@
 
                 for (var i = 0; i < module.states.length; i++) {
                     var def = module.states[i];
-                    var stateId=def.id; // the id of the state
+                    var stateId = def.id; // the id of the state
                     var state = def.state; // the actual state definition
 
-                    if ( !state.abstract ) {
-                        state.resolve=state.resolve || {}; // ensure resolve property exists
+                    if (!state.abstract) {
+                        state.resolve = state.resolve || {}; // ensure resolve property exists
                         state.resolve._dynload = ['$ocLazyLoad', function ($ocLazyLoad) {
                             // the same resolve is added to all states, but we only want to do it once
                             if (!dependenciesLoaded) {

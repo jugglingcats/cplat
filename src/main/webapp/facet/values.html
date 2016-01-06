@@ -1,0 +1,55 @@
+<div ng-controller="FacetValueCtrl">
+    <h3>Facet Values</h3>
+
+    <form>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="select-value">Select Existing Value</label>
+                    <select ng-model="def" id="select-value" class="form-control" ng-options="v as v.title for v in values track by v.id"></select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" id="title" class="form-control" placeholder="Enter value" ng-model="def.title">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="types">Type</label>
+                    <select id="types" class="form-control" ng-model="def.type" ng-options="t.code as t.title for t in types"></select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="well">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="rel">Linked Types</label>
+                                <select ng-model="tmp" id="rel" class="form-control" ng-options="t.code as t.title for t in types"></select>
+                                <div><small>Types that appear when this value is selected</small></div>
+                                <button class="btn btn-default" ng-click="addLinked(tmp)" ng-disabled="!tmp">Add</button>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="list-group">
+                                <li class="list-group-item" ng-repeat="id in def.linked">{{id}} <a href ng-click="remove(id)">remove</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <button class="btn btn-success" ng-click="upsert()">Add/Update Value</button>
+            <button class="btn btn-danger" ng-click="delete()">Delete</button>
+            <button class="btn btn-default" ng-click="reset()">Reset</button>
+        </div>
+    </form>
+
+</div>

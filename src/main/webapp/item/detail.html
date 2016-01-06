@@ -1,3 +1,13 @@
 <h1>{{item.title}}</h1>
 
+<p>
+    votes: {{item.votes || 0}} |
+    <a href ng-click="upvote()">upvote</a> |
+    <a href ng-click="downvote()">downvote</a>
+</p>
+
+<pre>{{sel | json}}</pre>
+<div item-facets ng-model="sel"></div>
+
 <span ng-bind-html="content"></span>
+

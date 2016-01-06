@@ -1,6 +1,9 @@
 (function () {
-    var app = angular.module("test", []);
-    app.controller("TestCtrl", function ($scope, $dynamicMenu) {
-        $scope.msg="Hello";
+    var app = angular.module("cplat-core", ['persona']);
+    app.controller("CoreCtrl", function ($scope, $dynamicMenu, Persona) {
+        $scope.login = function() {
+            console.log("Hello");
+            Persona.request();
+        }
     });
 }());

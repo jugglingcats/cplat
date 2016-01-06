@@ -1,0 +1,38 @@
+{
+  "name": "Facet Management",
+  "states": [
+    {
+      "id": "facet",
+      "state": {
+        "abstract": true,
+        "templateUrl": "facet/layout.html",
+        "url": "/facet"
+      }
+    },
+    {
+      "id": "facet.dashboard",
+      "state": {
+        "url": "/dashboard",
+        "controller": "FacetCtrl",
+        "templateUrl": "facet/dashboard.html"
+      }
+    }
+  ],
+  "menu": [
+    {
+      "state": "facet.dashboard",
+      "title": "Facets"
+    }
+  ],
+  "files": [
+    "facet/style.css",
+    "facet/facet.js"
+  ],
+  "requires": {
+    "cplat-data": ["app/cplat-data.js"]
+  },
+  "keep": {
+    "state": "app1.dashboard",
+    "title": "App1 Dashboard"
+  }
+}

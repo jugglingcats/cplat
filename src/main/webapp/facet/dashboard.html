@@ -1,0 +1,21 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-6" ng-include="'facet/types.html'"></div>
+        <div class="col-md-6" ng-include="'facet/values.html'"></div>
+    </div>
+
+    <hr>
+    <pre>{{selection | json}}</pre>
+<!--
+    <pre>{{values | json}}</pre>
+-->
+    <h3>Test Facet Categorisation <button class="btn-sm btn btn-default" ng-click="refresh()">Refresh</button></h3>
+    <div class="row" ng-repeat="i in options track by i.code">
+        <div class="col-md-3">
+            <label for="sel-{{i.code}}">{{i.title}}</label>
+        </div>
+        <div class="col-md-3">
+            <select id="sel-{{i.code}}" class="form-control" ng-model="selection[i.code]" ng-options="v.id as v.title for v in values[i.code]"></select>
+        </div>
+    </div>
+</div>

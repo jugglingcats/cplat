@@ -1,6 +1,7 @@
 buildscript {
+    ext.kotlin_version = '1.0.0-beta-4584'
     apply plugin: 'idea'
-    ext.kotlin_version = '0.12.613'  // New
+//    ext.kotlin_version = '0.12.613'  // New
     repositories {
 //        maven { url "https://repo.spring.io/libs-release" }
         mavenLocal()
@@ -40,6 +41,7 @@ sourceSets {
             srcDir "test/main/kotlin"
         }
     }
+    main.java.srcDirs += 'src/main/kotlin'
 }
 
 configurations {
@@ -51,7 +53,6 @@ dependencies {
     compile("org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version") // New
 //    compile("org.springframework.boot:spring-boot-starter-web")
 //    compile("org.springframework.boot:spring-boot-starter-undertow:1.2.3.RELEASE")
-    testCompile("junit:junit:4.11")
     compile 'org.springframework:spring-context:4.1.6.RELEASE'
     compile 'com.sun.jersey.contribs:jersey-spring:1.14'
     compile 'io.undertow:undertow-servlet:1.2.0.Final'
@@ -61,7 +62,12 @@ dependencies {
     compile 'org.slf4j:slf4j-log4j12:1.6.1'
     compile 'com.github.richardwilly98.elasticsearch:elasticsearch-river-mongodb:2.0.5'
     compile 'org.springframework.data:spring-data-mongodb:1.7.0.RELEASE'
+    compile 'org.apache.httpcomponents:httpclient:4.5'
     compile 'org.jsoup:jsoup:1.8.2'
+
+    testCompile("junit:junit:4.11")
+    testCompile("org.springframework:spring-test:4.1.6.RELEASE")
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
 
 task wrapper(type: Wrapper) {

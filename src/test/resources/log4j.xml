@@ -24,11 +24,6 @@
         <appender-ref ref="stdout"/>
     </logger>
 
-    <logger name="com.googlecode.flyway" additivity="false">
-        <level value="INFO"/>
-        <appender-ref ref="stdout"/>
-    </logger>
-
     <root>
         <priority value="WARN"/>
         <appender-ref ref="stdout"/>

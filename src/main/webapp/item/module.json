@@ -5,8 +5,12 @@
       "id": "item",
       "state": {
         "abstract": true,
-        "templateUrl": "item/layout.html",
-        "url": "/item"
+        "url": "/item",
+        "views": {
+          "": {
+            "templateUrl": "item/layout.html"
+          }
+        }
       }
     },
     {
@@ -21,8 +25,15 @@
       "id": "item.detail",
       "state": {
         "url": "/detail/:itemId",
-        "controller": "ItemDetailCtrl",
-        "templateUrl": "item/detail.html"
+        "views": {
+          "": {
+            "controller": "ItemDetailCtrl",
+            "templateUrl": "item/detail.html"
+          },
+          "rightNav@": {
+            "templateUrl": "item/rightnav.html"
+          }
+        }
       }
     },
     {
@@ -44,5 +55,9 @@
     "item/item.js"
   ],
   "requires": {
+    "cplat-data": [
+      "app/cplat-data.js",
+      "app/directives/facet.js"
+    ]
   }
 }

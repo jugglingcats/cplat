@@ -1,23 +1,46 @@
 package com.akirkpatrick.cplat.es
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthStatus
 import org.elasticsearch.client.Client
+import org.elasticsearch.client.Requests
 import org.elasticsearch.common.settings.ImmutableSettings
 import org.elasticsearch.node.NodeBuilder
 import org.slf4j.LoggerFactory
 import java.util.ArrayList
 import java.util.Collections
+import kotlin.collections.keySet
+import kotlin.text.startsWith
 
-public class ElasticSearchServer (val configuration: Map<String, String>) {
+public class ElasticSearchServer(val configuration: Map<String, String>) {
 
-    private val builder : ImmutableSettings.Builder get() = ImmutableSettings.settingsBuilder().put(configuration)
+    private val builder: ImmutableSettings.Builder get() = ImmutableSettings.settingsBuilder().put(configuration)
 
-    private var server = NodeBuilder.nodeBuilder().settings(builder).build()
+    private val server = NodeBuilder.nodeBuilder().settings(builder).build()
+
+    private val riverConfig = object {
+        val type = "mongodb"
+        val mongodb = object {
+            val db = "mongo_test"
+            val collection = "item"
+            val options = object {
+                val secondary_read_preference = true
+            }
+        }
+        val index = object {
+            val name="itemindex"
+            val type="item"
+        }
+
+        fun toJson(): String {
+            return ObjectMapper().writeValueAsString(this)
+        }
+    }
 
     public fun start() {
         if (log.isInfoEnabled()) {
             log.info("Starting the Elastic Search server node with these settings:")
-            val map = $server!!.settings().getAsMap()
+            val map = server.settings().getAsMap()
             val keys = ArrayList(map.keySet())
             Collections.sort<String>(keys)
             for (key in keys) {
@@ -25,21 +48,33 @@ public class ElasticSearchServer (val configuration: Map<String, String>) {
             }
         }
 
-        $server.start()
+        server.start()
 
         checkServerStatus()
 
-        if (log.isInfoEnabled()) {
-            log.info("Elastic Search server is started")
-        }
+//        createRivers()
+
+        log.info("Elastic Search server is started")
+    }
+
+    public fun createRivers() {
+        val s = riverConfig.toJson()
+        log.info("Creating river: {}", s)
+
+        val indexRequest = Requests.indexRequest("_river")
+                .type("itemindex")
+                .id("_meta")
+                .source(s)
+
+        server.client().index(indexRequest).actionGet()
     }
 
     public fun stop() {
-        $server.close()
+        server.close()
     }
 
     public fun getClient(): Client {
-        return $server.client()
+        return server.client()
     }
 
     protected fun getHealthStatus(): ClusterHealthStatus {

@@ -1,0 +1,45 @@
+<div ng-controller="FacetTypeCtrl">
+    <h3>Facet Types</h3>
+    <form>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="type-select">Select Existing Type</label>
+                    <select id="type-select" class="form-control" ng-model="def" ng-options="t as t.title for t in types track by t.code"></select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="code">Code</label>
+                    <input type="text" id="code" class="form-control" ng-model="def.code">
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" id="title" class="form-control" placeholder="Enter title of facet" ng-model="def.title">
+                </div>
+            </div>
+<!--
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="rel">Linked Facets</label>
+                    <select ng-model="tmp" id="rel" class="form-control" ng-options="f.id as f.title for f in types track by f.id"></select>
+                    <button class="form-control" ng-click="def.related.push(tmp)">Add</button>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div ng-repeat="id in def.related">{{id}} <a href ng-click="remove(id)">remove</a></div>
+            </div>
+-->
+        </div>
+        <div>
+            <button class="btn btn-success" ng-click="upsert()">Add/Update Facet Type</button>
+            <button class="btn btn-danger" ng-click="delete()">Delete</button>
+            <button class="btn btn-default" ng-click="reset()">Reset</button>
+        </div>
+    </form>
+
+</div>

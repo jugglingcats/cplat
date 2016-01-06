@@ -1,0 +1,26 @@
+<!--
+<form class="row">
+    <div class="form-group col-md-3" ng-repeat="i in options track by i.code">
+        <label for="sel-{{i.code}}">{{i.title}}</label>
+        <select id="sel-{{i.code}}" class="form-control"
+                ng-model="selection[i.code]"
+                ng-options="v.id as v.title for v in values[i.code]">
+        </select>
+    </div>
+</form>
+-->
+
+<pre>{{selection | json}}</pre>
+<div >
+    <md-autocomplete ng-repeat="i in options track by i.code"
+            md-selected-item-change="select(i.code, item)"
+            md-search-text="searchText"
+            md-search-text-change=""
+            md-items="item in getValues(i.code)"
+            md-item-text="item.title"
+            md-floating-label="{{i.title}}">
+        <span md-highlight-text="searchText">{{item.title}}</span>
+    </md-autocomplete>
+</div>
+
+

@@ -1,9 +1,13 @@
-package com.akirkpatrick.cplat
+package com.akirkpatrick.cplat.support
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.undertow.server.handlers.resource.*
 import java.io.File
-import java.util.LinkedHashMap
+import java.util.*
+import kotlin.text.endsWith
+import kotlin.text.indexOf
+import kotlin.text.startsWith
+import kotlin.text.substring
 
 /**
  * @author alfie

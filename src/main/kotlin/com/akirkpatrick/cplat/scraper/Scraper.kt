@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.stereotype.Component
+import kotlin.collections.drop
+import kotlin.collections.forEach
 
 val log = LoggerFactory.getLogger(javaClass<ApplicationConfig>())
 
@@ -32,8 +34,8 @@ public fun main(args: Array<String>) {
     //    processPostUrl("http://www.lfgss.com/conversations/270398/")
 }
 
-Component
-public open class ScraperRunner Autowired constructor(val repository: ItemRepository) {
+@Component
+public open class ScraperRunner @Autowired constructor(val repository: ItemRepository) {
     public fun run() {
         processPostUrl("http://www.lfgss.com/conversations/270398/")
     }

@@ -1,17 +1,19 @@
 package com.akirkpatrick.cplat.server
 
-import com.akirkpatrick.cplat.DevModeResourceManager
+import com.akirkpatrick.cplat.config.ElasticSearchConfig
 import com.akirkpatrick.cplat.es.ElasticSearchServer
+import com.akirkpatrick.cplat.support.DevModeResourceManager
 import io.undertow.Handlers
 import io.undertow.Undertow
 import io.undertow.servlet.Servlets
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.ConfigurableApplicationContext
+import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Component
-import java.util.HashMap
 
-Component
-public open class ServerRunner Autowired constructor(val ctx: ConfigurableApplicationContext, val es: ElasticSearchServer) {
+@Component
+@Profile(ElasticSearchConfig.ES_ENABLED)
+public open class ServerRunner @Autowired constructor(val ctx: ConfigurableApplicationContext, val es: ElasticSearchServer) {
     fun run() {
         es.start()
 

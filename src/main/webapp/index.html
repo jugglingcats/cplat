@@ -1,70 +1,126 @@
 <!DOCTYPE html>
 <html>
 <head>
+<!--
     <link rel="stylesheet" href="css/bootstrap.min.css">
+-->
+    <link rel="stylesheet" href="css/angular-material.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
 
     <script src="js/angular.js"></script>
+    <script src="js/angular-cookies.js"></script>
+    <script src="js/angular-animate.js"></script>
+    <script src="js/angular-aria.js"></script>
+    <script src="js/angular-material.js"></script>
+
     <script src="core/dynamic-menu.js"></script>
     <script src="core/dynamic-module.js"></script>
+
     <script src="js/ocLazyLoad.js"></script>
     <script src="js/angular-ui-router.js"></script>
-    <script>
-        // TODO: should be in script file ;-)
-        var app = angular.module("cplat", ['oc.lazyLoad', 'dynamic.module']);
 
-        app.config(['$ocLazyLoadProvider', '$dynamicModuleProvider', '$stateProvider', function ($ocLazyLoadProvider, $dynamicModuleProvider, $stateProvider) {
-            $ocLazyLoadProvider.config({
-                debug: true,
-                events: true
-            });
+    <script src="https://login.persona.org/include.js"></script>
+    <script src="js/angular-persona.js"></script>
 
-            console.log("Initialising container application");
+    <script src="js/spin.js"></script>
+    <script src="js/angular-spinner.js"></script>
 
-            $stateProvider.state("app", {
-                url: "",
-                templateUrl: "core/index.html",
-                controller: "TestCtrl",
-                resolve: {
-                    test: function ($ocLazyLoad) {
-                        console.log("Resolve for test");
-                        return $ocLazyLoad.load({
-                            name: "test",
-                            files: ["core/module.js"]
-                        })
-                    }
-                }
-            });
-            $stateProvider.state("404", {
-                url: "/404",
-                templateUrl: "core/404.html"
-            });
+    <script src="app/login.js"></script>
 
-            $dynamicModuleProvider.configure(["item", "app1", "app2"], "/404");
-        }]);
-    </script>
+    <script src="app/app.js"></script>
+
+    <style>
+        .spinner {
+            width: 10px;
+            height: 10px;
+        }
+
+        .navbar-account {
+            color: lightgrey;
+            padding-top: 8px;
+        }
+    </style>
+
+    <meta name="viewport" content="initial-scale=1"/>
 </head>
-<body ng-app="cplat" style="padding-top: 50px">
+<body layout="column" ng-app="cplat" ng-controller="HeadCtrl">
 
-<nav class="navbar navbar-inverse navbar-fixed-top navbar-default">
+<!--<nav class="navbar navbar-inverse navbar-fixed-top navbar-default">
     <div class="container">
         <div class="navbar-header">
             <a href="#" class="navbar-brand">LFGSS Classifieds</a>
         </div>
         <div class="navbar-collapse">
             <dynamic-menu></dynamic-menu>
-            <form class="navbar-form navbar-right">
-                <div class="form-group">
-                    <input type="text" placeholder="Email" class="form-control">
-                </div>
-                <div class="form-group">
-                    <input type="password" placeholder="Password" class="form-control">
-                </div>
-                <button type="submit" class="btn btn-success">Sign in</button>
-            </form>
+            <div ng-switch="session.state">
+                <ul class="nav navbar-nav navbar-right" ng-switch-when="authenticated">
+                    <li>
+                        <a href ng-click="logout()"><i class="fa fa-user"></i> {{session.account.name}}</a>
+                    </li>
+                </ul>
+                <form class="navbar-form navbar-right" ng-switch-when="loggedout">
+                    <button login class="btn btn-success">Sign in/Register</button>
+                </form>
+            </div>
+            <div class="spinner-container">
+                <span us-spinner="{color:'grey', lines: 10, speed: 1.5, opacity: 0.15, trail: 30, radius: 6, length: 4, width: 3}"></span>
+            </div>
         </div>
     </div>
-</nav>
+</nav>-->
 
-<div ui-view></div>
+<!--
+<pre>{{session || json}}</pre>
+
+-->
+<md-toolbar>
+    <div class="md-toolbar-tools">
+        <md-button ng-click="toggleSidenav('left')" hide-gt-sm class="md-icon-button menuBtn">
+            <md-icon aria-label="Menu" md-svg-icon="app/icons/menu.svg"></md-icon>
+        </md-button>
+        <h2>
+            <span>LFGSS</span>
+        </h2>
+    </div>
+</md-toolbar>
+
+<section layout="horizontal">
+    <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')">
+        <md-list class="muppet-list">
+            <md-item>
+                <md-item-content>
+                    <md-button ng-click="transition('item.dashboard')" ng-class="{'selected' : it === selected }">
+                        <md-icon aria-label="Complete Bikes" md-svg-icon="app/icons/bike.svg"></md-icon>
+                        Complete Bikes
+                    </md-button>
+                </md-item-content>
+            </md-item>
+            <md-item>
+                <md-item-content>
+                    <md-button ng-click="selectMuppet(it)" ng-class="{'selected' : it === selected }">
+                        <md-icon aria-label="Components" md-svg-icon="app/icons/chainring.svg"></md-icon>
+                        Components
+                    </md-button>
+                </md-item-content>
+            </md-item>
+        </md-list>
+    </md-sidenav>
+
+    <md-content>
+        <div layout="row" flex class="content-wrapper">
+            <div layout="column" flex class="content-wrapper" id="primary-col">
+                <md-content layout="column" flex class="md-padding">
+                    <div ui-view></div>
+                </md-content>
+            </div>
+        </div>
+    </md-content>
+
+    <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right" md-is-locked-open="$mdMedia('gt-sm')">
+        <div ui-view="rightNav"></div>
+    </md-sidenav>
+
+</section>
+
 </body>
 </html>
