@@ -1,6 +1,5 @@
 {
   "js": [
-    "bower_components/react/react.js",
     "bower_components/angular/angular.js",
     "bower_components/angular-resource/angular-resource.js",
     "bower_components/angular-animate/angular-animate.js",
@@ -37,6 +36,7 @@
     "bower_components/font-awesome/fonts/fontawesome-webfont.eot"
   ],
   "keep": [
+    "bower_components/react/react.js",
     "bower_components/angular-bootstrap/ui-bootstrap-tpls.js"
   ]
 }

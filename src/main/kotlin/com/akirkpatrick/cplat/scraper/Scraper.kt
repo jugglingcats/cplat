@@ -19,7 +19,7 @@ public fun main(args: Array<String>) {
     ctx.scan("com.akirkpatrick.cplat")
     ctx.refresh()
 
-    ctx.getBean(javaClass<ScraperRunner>()).run()
+    ctx.getBean(ScraperRunner::class.java).run()
 
     //    val doc = Jsoup.connect("http://www.lfgss.com/microcosms/548/").userAgent("").get()
     //    val title=doc.title()
